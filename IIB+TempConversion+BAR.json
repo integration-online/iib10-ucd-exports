@@ -1,0 +1,289 @@
+{
+    "name": "IIB TempConversion BAR",
+    "description": " IIB TempConversion Broker Archive",
+    "created": 1459272276913,
+    "componentType": "STANDARD",
+    "ignoreQualifiers": 0,
+    "importAutomatically": false,
+    "useVfs": true,
+    "active": true,
+    "deleted": false,
+    "defaultVersionType": "FULL",
+    "cleanupDaysToKeep": 0,
+    "cleanupCountToKeep": 0,
+    "componentTemplate": {
+        "securityResourceId": "24eb0118-b2ac-4156-b7a2-56eba2753f29",
+        "path": "componentTemplates\/e3709a1d-73cb-4420-aab6-7e7a7f0d908f",
+        "name": "Broker Archive (IBM Integration Bus 10.0)",
+        "description": "A broker archive (BAR) for IBM Integratiob Bus 10.0.",
+        "ignoreQualifiers": 0,
+        "componentType": "STANDARD",
+        "tags": [],
+        "active": true,
+        "envPropDefs": [],
+        "resPropDefs": [],
+        "propDefs": [{
+            "name": "iib.bars.list",
+            "label": "Broker Archives (BARs)",
+            "pattern": "",
+            "type": "TEXT",
+            "value": "bar1;bar2;bar3",
+            "required": true,
+            "description": "A semi-colon (;) delimited list of BARs that are part of this component.",
+            "placeholder": ""
+        }],
+        "properties": [],
+        "processes": [{
+            "name": "Deploy Broker Archive",
+            "description": "Deploy one or more BARs to an IBM Integration Bus server.",
+            "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.id}",
+            "takesVersion": true,
+            "inventoryActionType": "ADD",
+            "status": "Active",
+            "configActionType": "ADD",
+            "active": true,
+            "path": "componentTemplates\/e3709a1d-73cb-4420-aab6-7e7a7f0d908f\/processes\/f519dd28-b320-406f-9e35-a0ebbf76d44b",
+            "propDefs": [],
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "Download Artifacts",
+                        "from": "Clear Working Directory",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Deploy IIB BARs",
+                        "from": "Download Artifacts",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "5d5cf499a294868df39ca7ffbf8ba3",
+                        "from": "Deploy IIB BARs",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Clear Working Directory",
+                        "type": "ALWAYS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "Clear Working Directory",
+                        "x": -90,
+                        "y": 90,
+                        "h": 60,
+                        "w": 260
+                    },
+                    {
+                        "name": "Download Artifacts",
+                        "x": -60.5,
+                        "y": 190,
+                        "h": 60,
+                        "w": 210
+                    },
+                    {
+                        "name": "5d5cf499a294868df39ca7ffbf8ba3",
+                        "x": -0.5,
+                        "y": 410,
+                        "h": 50,
+                        "w": 90
+                    },
+                    {
+                        "name": "Deploy IIB BARs",
+                        "x": -60,
+                        "y": 300,
+                        "h": 60,
+                        "w": 200
+                    }
+                ],
+                "type": "graph",
+                "name": "99a3cff4-fb94-46c8-a34c-9d25fe9b10ae",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "5d5cf499a294868df39ca7ffbf8ba3",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "commandName": "Download Artifacts",
+                        "pluginName": "IBM UrbanCode Deploy Versioned File Storage",
+                        "pluginVersion": 23,
+                        "properties": {
+                            "directoryOffset": "load",
+                            "artifactSetBaseDir": "",
+                            "fileIncludePatterns": "**\/*",
+                            "fileExcludePatterns": "",
+                            "syncMode": "FULL",
+                            "fullVerification": "true",
+                            "setFileExecuteBits": "false",
+                            "verifyFileIntegrity": "false",
+                            "versionId": "${p:version.id}",
+                            "serverUrl": "${p:server.url}",
+                            "compId": "${p:component.id}",
+                            "resId": "${p:resource.id}",
+                            "charset": "",
+                            "label": ""
+                        },
+                        "type": "plugin",
+                        "name": "Download Artifacts",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "commandName": "Deploy IIB BARs",
+                        "pluginName": "Prolifics Build Conductor for IBM Integration Bus 10.0",
+                        "pluginVersion": 1,
+                        "properties": {
+                            "mqsi_bin": "${p:resource\/mqsi.bin}",
+                            "iit_bin": "${p:resource\/iit.bin}",
+                            "iib_hostSpecs_list": "${p:resource\/iib.hostSpecs.list}",
+                            "iib_timeout": "${p:resource\/iib.timeout}",
+                            "iib_execGroup": "${p:environment\/iib.execGroup}",
+                            "iib_bars_list": "${p:component\/iib.bars.list}"
+                        },
+                        "type": "plugin",
+                        "name": "Deploy IIB BARs",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "commandName": "Delete Files and Directories",
+                        "pluginName": "File Utils",
+                        "pluginVersion": 41,
+                        "properties": {
+                            "baseDir": ".",
+                            "includes": "**\/*",
+                            "excludes": "",
+                            "followSymlinks": "false",
+                            "caseSensitive": "true"
+                        },
+                        "type": "plugin",
+                        "name": "Clear Working Directory",
+                        "children": []
+                    }
+                ]
+            }
+        }],
+        "genericProcesses": [],
+        "teamMappings": []
+    },
+    "sourceConfigPluginName": "Git",
+    "envPropDefs": [],
+    "resPropDefs": [],
+    "versionPropDefs": [],
+    "propSheetGroup": {"propSheets": [
+        {
+            "name": "GitComponentProperties",
+            "properties": [
+                {
+                    "name": "branch",
+                    "value": "master",
+                    "description": "",
+                    "secure": false
+                },
+                {
+                    "name": "excludes",
+                    "description": "",
+                    "secure": false
+                },
+                {
+                    "name": "extensions",
+                    "description": "",
+                    "secure": false
+                },
+                {
+                    "name": "gitPath",
+                    "value": "git",
+                    "description": "",
+                    "secure": false
+                },
+                {
+                    "name": "includes",
+                    "value": "*.bar",
+                    "description": "",
+                    "secure": false
+                },
+                {
+                    "name": "password",
+                    "value": "crypt_v1{AES\/CBC\/PKCS5Padding|aes128keyeo8x|jqVPmKlavVTwydYhu7Dk5g==|SB3m8LFQ1dm\/qppHJP\/2cA==}",
+                    "description": "",
+                    "secure": true
+                },
+                {
+                    "name": "repoUrl",
+                    "value": "ssh:\/\/git@github.com\/integration-online\/iib10-sample.git",
+                    "description": "",
+                    "secure": false
+                },
+                {
+                    "name": "saveFileExecuteBits",
+                    "value": "false",
+                    "description": "",
+                    "secure": false
+                },
+                {
+                    "name": "username",
+                    "description": "",
+                    "secure": false
+                },
+                {
+                    "name": "watchTags",
+                    "value": "false",
+                    "description": "",
+                    "secure": false
+                }
+            ]
+        },
+        {
+            "name": "custom",
+            "properties": [
+                {
+                    "name": "iib.timeout",
+                    "value": "180",
+                    "description": "IIB Response Wait Time",
+                    "secure": false
+                },
+                {
+                    "name": "iit.bin",
+                    "value": "\/opt\/ibm\/iib-10.0.0.1\/tools\/iibt",
+                    "description": "IIB Toolkit Installed Binaries",
+                    "secure": false
+                },
+                {
+                    "name": "mqsi.bin",
+                    "value": "\/opt\/ibm\/iib-10.0.0.1\/server\/bin",
+                    "description": "IIB Runtime Installed Binaries",
+                    "secure": false
+                }
+            ]
+        },
+        {
+            "name": "template",
+            "properties": [{
+                "name": "iib.bars.list",
+                "value": "tempconvert",
+                "description": "",
+                "secure": false
+            }]
+        }
+    ]},
+    "processes": [],
+    "configTemplates": [],
+    "genericProcesses": [],
+    "teamMappings": [],
+    "tags": []
+}
